@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TRIPGO — Sayohatni tanla</title>
+<style>
+:root{--ink:#172b3a;--muted:#667785;--green:#16866a;--pale:#eef7f3;--line:#e5ece9;--gold:#f2b84b}
+*{box-sizing:border-box}body{margin:0;font-family:Arial, sans-serif;color:var(--ink);background:#f7faf9}
+header{height:72px;background:#fff;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 6%;position:sticky;top:0;z-index:5}
+.logo{font-size:25px;font-weight:900;letter-spacing:1px;color:var(--green)}.logo span{color:var(--ink)}
+nav{display:flex;gap:24px}nav a{color:#405260;text-decoration:none;font-weight:600;font-size:14px}nav a:hover{color:var(--green)}
+button,.btn{border:0;border-radius:10px;padding:12px 18px;background:var(--green);color:white;font-weight:700;cursor:pointer}button:hover,.btn:hover{background:#106d56}
+main{max-width:1200px;margin:auto;padding:28px 22px}
+.hero{min-height:380px;border-radius:24px;padding:52px;display:flex;align-items:center;color:white;background:linear-gradient(90deg,rgba(9,31,39,.82),rgba(9,31,39,.12)),url('https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=1600&q=85') center/cover}
+.hero-content{max-width:560px}.eyebrow{color:#b8ead9;font-weight:700;text-transform:uppercase;letter-spacing:2px;font-size:12px}
+h1{font-size:48px;line-height:1.08;margin:14px 0}.hero p{font-size:17px;line-height:1.6;color:#edf5f2}
+.section{margin-top:42px}.section-head{display:flex;justify-content:space-between;align-items:end;margin-bottom:18px}h2{font-size:27px;margin:0 0 7px}.sub{color:var(--muted);margin:0}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.card{background:white;border:1px solid var(--line);border-radius:17px;overflow:hidden;box-shadow:0 5px 18px #173a2a0a}
+.card img{width:100%;height:185px;object-fit:cover;display:block}.card-body{padding:17px}.tag{display:inline-block;background:var(--pale);color:var(--green);padding:6px 9px;border-radius:20px;font-size:12px;font-weight:700}
+.card h3{margin:12px 0 8px;font-size:20px}.meta{color:var(--muted);font-size:13px;line-height:1.8}.price{font-weight:800;font-size:19px;margin:13px 0}.card-foot{display:flex;align-items:center;justify-content:space-between}
+.panel{background:#fff;border:1px solid var(--line);border-radius:18px;padding:24px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+input,textarea,select{width:100%;padding:13px;border:1px solid #dbe5e1;border-radius:9px;margin:7px 0 13px;font:inherit;background:#fff}
+textarea{min-height:100px;resize:vertical}label{font-weight:700;font-size:13px}
+.proposal{display:flex;justify-content:space-between;align-items:center;padding:14px 0;border-bottom:1px solid var(--line);gap:12px}
+.vote{background:#fff3d8;color:#875a0b;white-space:nowrap}
+.product img{height:150px}.product .price{margin-bottom:0}
+footer{margin-top:50px;background:#142b36;color:#d8e5e0;padding:32px 6%;text-align:center}
+.modal{display:none;position:fixed;inset:0;background:#061b20a8;z-index:10;align-items:center;justify-content:center;padding:18px}.modal-box{background:white;border-radius:18px;padding:25px;max-width:480px;width:100%}.close{float:right;background:#edf3f0;color:#234}
+.notice{font-size:12px;color:var(--muted);margin-top:10px}
+@media(max-width:850px){nav{gap:12px}nav a{font-size:12px}.grid{grid-template-columns:repeat(2,1fr)}.hero{padding:34px}h1{font-size:38px}}
+@media(max-width:600px){header{height:auto;padding:15px 18px;display:block}.logo{margin-bottom:12px}nav{overflow:auto;padding-bottom:4px;white-space:nowrap}.grid,.two{grid-template-columns:1fr}.hero{min-height:350px;padding:25px}.hero h1{font-size:34px}.section-head{align-items:start;gap:10px;flex-direction:column}}
+</style>
+</head>
+<body>
+<header>
+  <div class="logo">TRIP<span>GO</span></div>
+  <nav>
+    <a href="#home">Bosh sahifa</a><a href="#trips">Sayohatlar</a><a href="#ideas">Takliflar</a><a href="#albums">Albomlar</a><a href="#market">Market</a><a href="#profile">Profilim</a>
+  </nav>
+</header>
+<main>
+<section class="hero" id="home">
+ <div class="hero-content">
+  <div class="eyebrow">O‘zbekiston bo‘ylab yangi taassurotlar</div>
+  <h1>Keyingi manzilingiz qayer?</h1>
+  <p>Bir kunlik sayohatlarni kashf eting, o‘zingizga mos yo‘nalishni tanlang va yangi xotiralar yarating.</p>
+  <a class="btn" href="#trips" style="display:inline-block;text-decoration:none">Sayohatlarni ko‘rish</a>
+ </div>
+</section>
+
+<section class="section" id="trips">
+ <div class="section-head"><div><h2>Rejalashtirilgan sayohatlar</h2><p class="sub">O‘zingizga mos yo‘nalishni tanlang</p></div>
+ <select id="filter" style="max-width:190px;margin:0" onchange="filterTrips()"><option value="all">Barcha yo‘nalishlar</option><option value="tabiat">Tabiat</option><option value="tarix">Tarixiy joylar</option></select></div>
+ <div class="grid" id="tripGrid"></div>
+</section>
+
+<section class="section" id="ideas">
+ <div class="section-head"><div><h2>Sayohat takliflari</h2><p class="sub">Keyingi safar qayerga borishni xohlaysiz?</p></div></div>
+ <div class="two">
+  <div class="panel"><h3>Yangi taklif yuborish</h3><label>Manzil nomi</label><input id="ideaName" placeholder="Masalan: Zomin tog‘lari"><label>Nima uchun shu joyga borish kerak?</label><textarea id="ideaText" placeholder="Taklifingiz haqida yozing..."></textarea><button onclick="addIdea()">Taklif yuborish</button></div>
+  <div class="panel"><h3>Foydalanuvchilar takliflari</h3><div id="ideaList"></div><p class="notice">Takliflar hozircha ushbu brauzerda saqlanadi.</p></div>
+ </div>
+</section>
+
+<section class="section" id="albums">
+ <h2>Sayohat albomlari</h2><p class="sub" style="margin:8px 0 18px">O‘tgan safarlardan lavhalar</p>
+ <div class="grid">
+  <article class="card"><img src="https://images.unsplash.com/photo-1596402184320-417e7178b2cd?auto=format&fit=crop&w=900&q=80" alt="Samarqand"><div class="card-body"><span class="tag">Tarix</span><h3>Samarqand</h3><div class="meta">Registon va qadimiy obidalar</div></div></article>
+  <article class="card"><img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=900&q=80" alt="Tog‘ manzarasi"><div class="card-body"><span class="tag">Tabiat</span><h3>Tog‘ sayohati</h3><div class="meta">Tabiat qo‘ynida unutilmas kun</div></div></article>
+  <article class="card"><img src="https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=900&q=80" alt="Ko‘l"><div class="card-body"><span class="tag">Dam olish</span><h3>Ko‘l bo‘yida</h3><div class="meta">Do‘stlar bilan maroqli dam</div></div></article>
+ </div>
+</section>
+
+<section class="section" id="market">
+ <h2>Sayohat marketi</h2><p class="sub" style="margin:8px 0 18px">Safar uchun kerakli mahsulotlar</p>
+ <div class="grid">
+  <article class="card product"><img src="https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&w=900&q=80" alt="Ryukzak"><div class="card-body"><span class="tag">Sayohat jihozi</span><h3>Sayohat ryukzagi</h3><div class="price">249 000 so‘m</div><button onclick="addCart('Sayohat ryukzagi',249000)">Savatga qo‘shish</button></div></article>
+  <article class="card product"><img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=900&q=80" alt="Sport oyoq kiyimi"><div class="card-body"><span class="tag">Kiyim</span><h3>Qulay sport oyoq kiyimi</h3><div class="price">399 000 so‘m</div><button onclick="addCart('Sport oyoq kiyimi',399000)">Savatga qo‘shish</button></div></article>
+  <article class="card product"><img src="https://images.unsplash.com/photo-1589365278144-c9e705famer?auto=format&fit=crop&w=900&q=80" alt="Suv idishi"><div class="card-body"><span class="tag">Aksessuar</span><h3>Suv idishi</h3><div class="price">59 000 so‘m</div><button onclick="addCart('Suv idishi',59000)">Savatga qo‘shish</button></div></article>
+ </div>
+ <div class="panel" style="margin-top:18px"><h3>Savat: <span id="cartCount">0</span> ta mahsulot</h3><div id="cartItems" class="meta">Hozircha savat bo‘sh.</div><strong id="cartTotal"></strong></div>
+</section>
+
+<section class="section" id="profile">
+ <h2>Profilim</h2><p class="sub" style="margin:8px 0 18px">Bronlaringiz va ma’lumotlaringiz</p>
+ <div class="two">
+  <div class="panel"><h3>Shaxsiy ma’lumotlar</h3><label>Ismingiz</label><input id="userName" placeholder="Ism familiya"><label>Telefon raqam</label><input id="userPhone" placeholder="+998 90 123 45 67"><button onclick="saveProfile()">Saqlash</button><p class="notice" id="profileStatus"></p></div>
+  <div class="panel"><h3>Mening bronlarim</h3><div id="myBookings" class="meta">Hozircha bron mavjud emas.</div><h3 style="margin-top:22px">Market buyurtmalari</h3><div id="myOrders" class="meta">Hozircha buyurtma yo‘q.</div></div>
+ </div>
+</section>
+</main>
+<footer>TRIPGO · O‘zbekiston bo‘ylab sayohatni oson rejalashtiring</footer>
+
+<div class="modal" id="bookingModal"><div class="modal-box"><button class="close" onclick="closeModal()">Yopish</button><h2 id="modalTitle">Sayohatga bron</h2><p class="sub" id="modalInfo"></p><label>Ismingiz</label><input id="bookName" placeholder="Ism familiya"><label>Telefon raqam</label><input id="bookPhone" placeholder="+998..."><label>Odamlar soni</label><select id="people"><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select><button onclick="confirmBooking()">Bron so‘rovini yuborish</button><p class="notice">Demo: so‘rov faqat shu brauzerda saqlanadi. Haqiqiy bron uchun server va administrator tasdig‘i kerak.</p></div></div>
+
+<script>
+const trips=[
+{id:1,name:"Zomin tog‘lari",type:"tabiat",date:"Sana keyin belgilanadi",price:180000,place:"Jizzax viloyati",img:"https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=900&q=80",desc:"Tog‘ havosi va go‘zal tabiat qo‘ynida bir kun."},
+{id:2,name:"Samarqand",type:"tarix",date:"Sana keyin belgilanadi",price:220000,place:"Samarqand viloyati",img:"https://images.unsplash.com/photo-1596402184320-417e7178b2cd?auto=format&fit=crop&w=900&q=80",desc:"Tarixiy obidalar va qadimiy shahar bilan tanishing."},
+{id:3,name:"Chorvoq",type:"tabiat",date:"Sana keyin belgilanadi",price:160000,place:"Toshkent viloyati",img:"https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=900&q=80",desc:"Suv va tog‘ manzaralari orasida hordiq chiqaring."}
+];
+let selectedTrip=null,cart=JSON.parse(localStorage.getItem("tripgo_cart")||"[]");
+function money(n){return n.toLocaleString("uz-UZ")+" so‘m"}
+function renderTrips(list=trips){document.getElementById("tripGrid").innerHTML=list.map(t=>`<article class="card"><img src="${t.img}" alt="${t.name}"><div class="card-body"><span class="tag">${t.type==="tabiat"?"Tabiat":"Tarixiy joy"}</span><h3>${t.name}</h3><div class="meta">📍 ${t.place}<br>📅 ${t.date}</div><p>${t.desc}</p><div class="card-foot"><div class="price">${money(t.price)}</div><button onclick="openBooking(${t.id})">Batafsil / Bron</button></div></div></article>`).join("")}
+function filterTrips(){let v=document.getElementById("filter").value;renderTrips(v==="all"?trips:trips.filter(t=>t.type===v))}
+function openBooking(id){selectedTrip=trips.find(t=>t.id===id);document.getElementById("modalTitle").textContent=selectedTrip.name+" — bron";document.getElementById("modalInfo").textContent=selectedTrip.desc+" Narxi: "+money(selectedTrip.price)+" / kishi";document.getElementById("bookingModal").style.display="flex"}
+function closeModal(){document.getElementById("bookingModal").style.display="none"}
+function confirmBooking(){let name=document.getElementById("bookName").value.trim(),phone=document.getElementById("bookPhone").value.trim(),people=Number(document.getElementById("people").value);if(!name||!phone){alert("Ism va telefon raqamni kiriting.");return}let b=JSON.parse(localStorage.getItem("tripgo_bookings")||"[]");b.push({name,phone,people,trip:selectedTrip.name,total:selectedTrip.price*people});localStorage.setItem("tripgo_bookings",JSON.stringify(b));document.getElementById("bookName").value="";document.getElementById("bookPhone").value="";closeModal();renderProfile();alert("Bron so‘rovi saqlandi. Bu demo versiya.");}
+function addIdea(){let name=document.getElementById("ideaName").value.trim(),desc=document.getElementById("ideaText").value.trim();if(!name){alert("Manzil nomini kiriting.");return}let a=JSON.parse(localStorage.getItem("tripgo_ideas")||"[]");a.push({name,desc,votes:0});localStorage.setItem("tripgo_ideas",JSON.stringify(a));document.getElementById("ideaName").value="";document.getElementById("ideaText").value="";renderIdeas()}
+function voteIdea(i){let a=JSON.parse(localStorage.getItem("tripgo_ideas")||"[]");a[i].votes++;localStorage.setItem("tripgo_ideas",JSON.stringify(a));renderIdeas()}
+function renderIdeas(){let a=JSON.parse(localStorage.getItem("tripgo_ideas")||"[]");document.getElementById("ideaList").innerHTML=a.length?a.map((x,i)=>`<div class="proposal"><div><b>${escapeHtml(x.name)}</b><div class="meta">${escapeHtml(x.desc||"Izoh qoldirilmagan")}</div></div><button class="vote" onclick="voteIdea(${i})">👍 ${x.votes}</button></div>`).join(""):"Hozircha takliflar yo‘q."}
+function escapeHtml(s){return s.replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
+function addCart(name,price){cart.push({name,price});localStorage.setItem("tripgo_cart",JSON.stringify(cart));renderCart()}
+function renderCart(){document.getElementById("cartCount").textContent=cart.length;document.getElementById("cartItems").innerHTML=cart.length?cart.map((x,i)=>`${escapeHtml(x.name)} — ${money(x.price)} <button style="padding:5px 8px;margin:3px" onclick="removeCart(${i})">×</button>`).join("<br>"):"Hozircha savat bo‘sh.";document.getElementById("cartTotal").textContent=cart.length?"Jami: "+money(cart.reduce((s,x)=>s+x.price,0)):""}
+function removeCart(i){cart.splice(i,1);localStorage.setItem("tripgo_cart",JSON.stringify(cart));renderCart()}
+function saveProfile(){localStorage.setItem("tripgo_profile",JSON.stringify({name:document.getElementById("userName").value,phone:document.getElementById("userPhone").value}));document.getElementById("profileStatus").textContent="Ma’lumotlar ushbu brauzerda saqlandi."}
+function renderProfile(){let b=JSON.parse(localStorage.getItem("tripgo_bookings")||"[]");document.getElementById("myBookings").innerHTML=b.length?b.map(x=>`${escapeHtml(x.trip)} · ${x.people} kishi · ${money(x.total)}`).join("<br>"):"Hozircha bron mavjud emas.";let p=JSON.parse(localStorage.getItem("tripgo_profile")||"{}");document.getElementById("userName").value=p.name||"";document.getElementById("userPhone").value=p.phone||"";document.getElementById("myOrders").textContent="Savatdagi mahsulotlar: "+cart.length+" ta. Buyurtmani rasmiylashtirish keyingi bosqichda qo‘shiladi."}
+renderTrips();renderIdeas();renderCart();renderProfile();
+</script>
+</body>
+</html>
